@@ -1,37 +1,42 @@
+import unidecode
+
 departement_communes = open(
     './resources/A-traiter.xlsx_Feuil1.csv',
     'r', encoding='utf8')
 adjectifsFR = open('./resources/adjectifsFR.txt', encoding='utf8')
 adjectifsEN = open('./resources/adjectifsEN.txt', encoding='utf8')
 adjectifsAll = open('./resources/Adj-all.csv', encoding='utf8')
-adjectifsEs = open('./resources/espagnol.txt')
-additionalAdjectif = open('./resources/prefixe.csv')
-adjectifsItalien = open('./resources/italian.txt')
+adjectifsEs = open('./resources/espagnol.txt', encoding='utf8')
+additionalAdjectif = open('./resources/prefixe.csv', encoding='Windows-1258')
+adjectifsItalien = open('./resources/italian.txt', encoding='utf8')
+adjectifs2 = open('./resources/adjectif2.csv', encoding='utf8')
 
-adjectifsList = []
-
+adjectifsList = ['apre', 'joyeux', 'rouse', 'assis', 'cour']
+for adj in adjectifs2:
+    indexRetour = adj.find('\n')
+    adjectifsList.append(unidecode.unidecode(adj[0:indexRetour].lower()))
 for adj in additionalAdjectif:
     indexRetour = adj.find('\n')
-    adjectifsList.append(adj[0:indexRetour].lower())
+    adjectifsList.append(unidecode.unidecode(adj[0:indexRetour].lower()))
 
 for adj in adjectifsFR:
     indexRetour = adj.find('\n')
-    adjectifsList.append(adj[0:indexRetour].lower())# retirer le caractere '\n'
+    adjectifsList.append(unidecode.unidecode(adj[0:indexRetour].lower()))# retirer le caractere '\n'
 #print(adjectifsList)
 for adj in adjectifsEN:
     indexRetour = adj.find('\n')
-    adjectifsList.append(adj[0:indexRetour].lower())
+    adjectifsList.append(unidecode.unidecode(adj[0:indexRetour].lower()))
 
 for adj in adjectifsAll:
     indexRetour = adj.find('\n')
-    adjectifsList.append(adj[0:indexRetour].lower())
+    adjectifsList.append(unidecode.unidecode(adj[0:indexRetour].lower()))
 
 for adj in adjectifsEs :
     indexRetour = adj.find('\n')
     adj = adj[0:indexRetour]
     adList = adj.split('-')
     adList[0].strip()
-    adjectifsList.append( adList[0].lower())
+    adjectifsList.append(unidecode.unidecode(adj[0:indexRetour].lower()))
 
 nbreOc=0
 nbreOil=0
@@ -70,5 +75,4 @@ def oilOc(nomCommune):
     return value
 
 traitement()
-print (str(nbreOil) + " "+str(nbreOc))
-#print(adjectifsList)
+print(str(nbreOil) + " " + str(nbreOc))
